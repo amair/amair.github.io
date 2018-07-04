@@ -60,7 +60,7 @@ AmCharts.makeChart
 		],
 		"dataSets": [{
 		    "dataLoader": {
-		      "url": "https://api.thingspeak.com/channels/115328/fields/2.csv?api_key=JBLP09FSEYH935UH",
+		      "url": "http://cors.io/?u=https://api.thingspeak.com/channels/115328/fields/2.csv?api_key=JBLP09FSEYH935UH",
 		      "format": "csv",
 		      "delimiter": ",",       // column separator
 		      "useColumnNames": true, // use first row for column names

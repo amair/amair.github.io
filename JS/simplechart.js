@@ -64,7 +64,8 @@ AmCharts.makeChart
 		      "format": "csv",
 		      "delimiter": ",",       // column separator
 		      "useColumnNames": true, // use first row for column names
-		      "skip": 1               // skip header row
+		      "skip": 1,              // skip header row
+		      "showErrors": true
 		    }
 		}]
 	}

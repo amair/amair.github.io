@@ -3,7 +3,7 @@ AmCharts.makeChart
 	{
 		"type": "serial",
 		"categoryField": "created_at",
-		"dataDateFormat": "YYYY-MM-DD hh:ss:mm UTC",
+		"dataDateFormat": "YYYY-MM-DD HH:MM:SS UTC",
 		"startDuration": 1,
 		"accessibleTitle": "minimumtemperature",
 		"backgroundAlpha": 0.8,
@@ -63,8 +63,7 @@ AmCharts.makeChart
 	      "format": "csv",
 	      "delimiter": ",",       // column separator
 	      "useColumnNames": true, // use first row for column names
-	      "skip": 1,              // skip header row
-	      "showErrors": true
+	      "skip": 1               // skip header row
 	    }
 	}
 );

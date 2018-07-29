@@ -22,22 +22,20 @@ AmCharts.ready(function() {
 
             var dataSet1 = new AmCharts.DataSet();
             dataSet1.dataProvider = minData;
-            dataSet1.fieldMappings = [{fromField:"field1", toField:"min"}];
+            dataSet1.fieldMappings = [{fromField:"field1", toField:"temp"}];
             dataSet1.categoryField = "created_at";
             dataSet1.title = "Minimum";
-            dataSet1.compared = true;
+            dataSet1.compared = false;
             dataSet1.color =  "#0000FF";
-
 
             var dataSet2 = new AmCharts.DataSet();
 
             dataSet2.dataProvider = maxData;
-            dataSet2.fieldMappings = [{fromField:"field2", toField:"max"}];
+            dataSet2.fieldMappings = [{fromField:"field2", toField:"temp"}];
             dataSet2.categoryField = "created_at";
             dataSet2.title = "Maximum";
             dataSet2.compared = true;
             dataSet2.color = "#FF0000";
-
 
             chart.dataSets = [dataSet1, dataSet2];
 
@@ -55,14 +53,14 @@ AmCharts.ready(function() {
 
             var graph = new AmCharts.StockGraph();
 
-            graph.valueField = "min";
-            graph.compareField = "max";
+            graph.valueField = "temp";
+            graph.compareField = "temp";
             graph.type = "line";
             graph.title = "Min-Max"
             graph.comparable = true;
-            graph.valueAxis = 'axis';
+            // graph.valueAxis = 'axis';
             // graph.lineThickness = ;
-            // graph.compareGraphLineThickness = ;
+            graph.comparedGraphLineThickness = 2;
             // graph.compareGraph = {
             //     "type": "smoothedLine",
             //     "bullet": "round"

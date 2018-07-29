@@ -1,101 +1,159 @@
-AmCharts.ready(function() {
+var chart = AmCharts.makeChart( "chartdiv", {
+  "type": "stock",
+"theme": "light",
 
-    AmCharts.loadFile( "https://api.thingspeak.com/channels/115328/fields/1.csv?api_key=JBLP09FSEYH935UH", {}, function( response ) {
+  "dataSets": [ {
+    "title": "Minimum",
+    "fieldMappings": [ {
+      "fromField": "field1",
+      "toField": "temp"
+    } ],
+    "compared": false,
+    "categoryField": "created_at",
 
-    var minData = AmCharts.parseCSV( response, {
-        "useColumnNames": true,
-        "skip": 1
-    } );
+    "dataLoader": {
+      "url": "https://api.thingspeak.com/channels/115328/fields/1.csv?api_key=JBLP09FSEYH935UH",
+      "format": "csv",
+      "showCurtain": true,
+      "showErrors": true,
+      "async": true,
+      "delimiter": ",",
+      "useColumnNames": true
+    },
 
-        AmCharts.loadFile( "https://api.thingspeak.com/channels/115328/fields/2.csv?api_key=JBLP09FSEYH935UH", {}, function( response ) {
+  }, {
+    "title": "Maximum",
+    "fieldMappings": [ {
+      "fromField": "field2",
+      "toField": "temp"
+    } ],
+    "compared": true,
+    "categoryField": "created_at",
 
-            var maxData = AmCharts.parseCSV( response, {
-                "useColumnNames": true,
-                "skip": 1
-            } );
+    "dataLoader": {
+      "url": "https://api.thingspeak.com/channels/115328/fields/2.csv?api_key=JBLP09FSEYH935UH",
+      "format": "csv",
+      "showCurtain": true,
+      "showErrors": true,
+      "async": true,
+      "delimiter": ",",
+      "useColumnNames": true
+    }
+  } ],
+  // 2018-03-30 22:57:30 UTC
+  "dataDateFormat": "YYYY-MM-DD JJ:NN:SS UTC",
 
-            var chart = new AmCharts.AmStockChart();
+  "panels": [ {
+      "title": "Value",
 
-            chart.dataDateFormat = ("YYYY-MM-DD JJ:NN:SS");
+      "stockGraphs": [ {
+        "id": "g1",
+        "valueField": "temp",
+        "comparable": true,
+        "compareField": "temp",
+        "showBalloon": true,
+        "balloonText": "[[title]]:<b>[[value]]</b>",
+        "compareGraphBalloonText": "[[title]]:<b>[[value]]</b>"
+      } ],
 
-            chart.pathToImages = "images/";
+      "stockLegend": {
+        "valueTextRegular": "[[value]]",
+        "periodValueTextComparing": "[[value.close]]",
+        "periodValueTextRegular": "[[value.close]]"
+      }
 
-            var dataSet1 = new AmCharts.DataSet();
-            dataSet1.dataProvider = minData;
-            dataSet1.fieldMappings = [{fromField:"field1", toField:"temp"}];
-            dataSet1.categoryField = "created_at";
-            dataSet1.title = "Minimum";
-            dataSet1.compared = false;
-            dataSet1.color =  "#0000FF";
+    }
+  ],
 
-            var dataSet2 = new AmCharts.DataSet();
+  "panelsSettings": {
+    //    "color": "#fff",
+    "plotAreaFillColors": "#333",
+    "plotAreaFillAlphas": 1,
+    "marginLeft": 60,
+    "marginTop": 5,
+    "marginBottom": 5,
+    "recalculateToPercents": "never"
+  },
 
-            dataSet2.dataProvider = maxData;
-            dataSet2.fieldMappings = [{fromField:"field2", toField:"temp"}];
-            dataSet2.categoryField = "created_at";
-            dataSet2.title = "Maximum";
-            dataSet2.compared = true;
-            dataSet2.color = "#FF0000";
+  "chartScrollbarSettings": {
+    "graph": "g1",
+    "graphType": "line",
+    "usePeriod": "WW",
+    "backgroundColor": "#333",
+    "graphFillColor": "#666",
+    "graphFillAlpha": 0.5,
+    "gridColor": "#555",
+    "gridAlpha": 1,
+    "selectedBackgroundColor": "#444",
+    "selectedGraphFillAlpha": 1
+  },
 
-            chart.dataSets = [dataSet1, dataSet2];
+  "categoryAxesSettings": {
+    "equalSpacing": true,
+    "parseDates" : true,
+    "gridColor": "#555",
+    "gridAlpha": 1
+  },
 
-            var valueAxis = new AmCharts.ValueAxis();
-            valueAxis.id = "axis";
-            valueAxis.type = "date";
+  "valueAxesSettings": {
+    "gridColor": "#555",
+    "gridAlpha": 1,
+    "inside": false,
+    "showLastLabel": true
+  },
 
-            var stockPanel = new AmCharts.StockPanel();
+  "chartCursorSettings": {
+    "pan": true,
+    "valueLineEnabled": true,
+    "valueLineBalloonEnabled": true
+  },
 
-            chart.panels = [stockPanel];
+  "legendSettings": {
+    //"color": "#fff"
+  },
 
-            // var panelsSettings = new AmCharts.PanelsSettings();
-            // panelsSettings.startDuration = 1;
-            // chart.panelsSettings = panelsSettings;
+  "stockEventsSettings": {
+    "showAt": "high",
+    "type": "pin"
+  },
 
-            var graph = new AmCharts.StockGraph();
+  "balloon": {
+    "textAlign": "left",
+    "offsetY": 10
+  },
 
-            graph.valueField = "temp";
-            graph.compareField = "temp";
-            graph.type = "line";
-            graph.title = "Min-Max"
-            graph.comparable = true;
-            // graph.valueAxis = 'axis';
-            // graph.lineThickness = ;
-            graph.comparedGraphLineThickness = 2;
-            // graph.compareGraph = {
-            //     "type": "smoothedLine",
-            //     "bullet": "round"
-            // };
-
-            stockPanel.addStockGraph(graph);
-
-            var categoryAxesSettings = new AmCharts.CategoryAxesSettings();
-            categoryAxesSettings.dashLength = 5;
-            categoryAxesSettings.equalSpacing = true;
-            categoryAxesSettings.parseDates = true;
-            chart.categoryAxesSettings = categoryAxesSettings;
-
-
-            var chartCursorSettings = new AmCharts.ChartCursorSettings();
-            chartCursorSettings.valueBalloonsEnabled = true;
-            chart.chartCursorSettings = chartCursorSettings;
-
-            var dataSetSelector = new AmCharts.DataSetSelector();
-            dataSetSelector.position = "left";
-
-            chart.dataSetSelector = dataSetSelector;
-
-            // var periodSelector = new AmCharts.PeriodSelector();
-            // periodSelector.periods = [{period:"DD", count:1, label:"1 day"},
-            //                           {period:"DD", selected:true, count:5, label:"5 days"},
-            //                           {period:"MM", count:1, label:"1 month"},
-            //                           {period:"YYYY", count:1, label:"1 year"},
-            //                           {period:"YTD", label:"YTD"},
-            //                           {period:"MAX", label:"MAX"}];
-            // periodSelector.dateFormat  = ("YYYY-MM-DD JJ:NN:SS");
-            // chart.periodSelector = periodSelector;
-
-            chart.write("chartdiv");
-
-        });
-    });
-});
+  "periodSelector": {
+    "position": "bottom",
+    "periods": [ {
+        "period": "DD",
+        "count": 10,
+        "label": "10D"
+      }, {
+        "period": "MM",
+        "count": 1,
+        "label": "1M"
+      }, {
+        "period": "MM",
+        "count": 6,
+        "label": "6M"
+      }, {
+        "period": "YYYY",
+        "count": 1,
+        "label": "1Y"
+      }, {
+        "period": "YYYY",
+        "count": 2,
+        "selected": true,
+        "label": "2Y"
+      },
+      /* {
+           "period": "YTD",
+           "label": "YTD"
+         },*/
+      {
+        "period": "MAX",
+        "label": "MAX"
+      }
+    ]
+  }
+} );

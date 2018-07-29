@@ -10,6 +10,8 @@ var chart = AmCharts.makeChart( "chartdiv", {
     } ],
     "compared": false,
     "categoryField": "created_at",
+    "color": "#0000FF",
+
 
     "dataLoader": {
       "url": "https://api.thingspeak.com/channels/115328/fields/1.csv?api_key=JBLP09FSEYH935UH",
@@ -29,6 +31,7 @@ var chart = AmCharts.makeChart( "chartdiv", {
     } ],
     "compared": true,
     "categoryField": "created_at",
+    "color": "#FF0000",
 
     "dataLoader": {
       "url": "https://api.thingspeak.com/channels/115328/fields/2.csv?api_key=JBLP09FSEYH935UH",
@@ -53,7 +56,9 @@ var chart = AmCharts.makeChart( "chartdiv", {
         "compareField": "temp",
         "showBalloon": true,
         "balloonText": "[[title]]:<b>[[value]]</b>",
-        "compareGraphBalloonText": "[[title]]:<b>[[value]]</b>"
+        "compareGraphBalloonText": "[[title]]:<b>[[value]]</b>",
+        "compareGraphLineThickness": 3,
+        "lineThickness": 3
       } ],
 
       "stockLegend": {
@@ -112,11 +117,6 @@ var chart = AmCharts.makeChart( "chartdiv", {
     //"color": "#fff"
   },
 
-  "stockEventsSettings": {
-    "showAt": "high",
-    "type": "pin"
-  },
-
   "balloon": {
     "textAlign": "left",
     "offsetY": 10
@@ -126,6 +126,10 @@ var chart = AmCharts.makeChart( "chartdiv", {
     "position": "bottom",
     "periods": [ {
         "period": "DD",
+        "count": 5,
+        "label": "5D"
+      }, {
+        "period": "DD",
         "count": 10,
         "label": "10D"
       }, {
@@ -134,23 +138,9 @@ var chart = AmCharts.makeChart( "chartdiv", {
         "label": "1M"
       }, {
         "period": "MM",
-        "count": 6,
-        "label": "6M"
-      }, {
-        "period": "YYYY",
-        "count": 1,
-        "label": "1Y"
-      }, {
-        "period": "YYYY",
         "count": 2,
-        "selected": true,
-        "label": "2Y"
-      },
-      /* {
-           "period": "YTD",
-           "label": "YTD"
-         },*/
-      {
+        "label": "2M"
+      }, {
         "period": "MAX",
         "label": "MAX"
       }
